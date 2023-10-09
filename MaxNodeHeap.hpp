@@ -15,9 +15,9 @@ template <class T>
 class MaxNodeHeap {
     private:
         std::vector<HeapNode<T>> heap;
-        static const int parent(int i) { return (i-1)/2; }
-        static const int left(int i) { return (2*i + 1); }
-        static const int right(int i) { return (2*i + 2); }
+        static int parent(int i) { return (i-1)/2; }
+        static int left(int i) { return (2*i + 1); }
+        static int right(int i) { return (2*i + 2); }
 
     public:
         MaxNodeHeap() { heap = std::vector<HeapNode<T>>(); }
