@@ -15,7 +15,8 @@ class MaxNodeHeap {
         int right(int i) { return (2*i + 2); }
 
     public:
-        MaxNodeHeap();
+        MaxNodeHeap() { heap = std::vector<HeapNode<T>>(); }
+        ~MaxNodeHeap() {}
         void heapify(int);
         void insert(T, int);
         T extract();
@@ -31,11 +32,6 @@ class MaxNodeHeap {
         template <class U>
         friend std::ostream& operator<<(std::ostream&, MaxNodeHeap<U>);
 };
-
-template <class T>
-MaxNodeHeap<T>::MaxNodeHeap(){
-    heap = std::vector<HeapNode<T>>();
-}
 
 template <class T>
 void MaxNodeHeap<T>::heapify(int curr){

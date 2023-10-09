@@ -15,7 +15,8 @@ class MinNodeHeap {
         int right(int i) { return (2*i + 2); }
 
     public:
-        MinNodeHeap();
+        MinNodeHeap() { heap = std::vector<HeapNode<T>>(); } 
+        ~MinNodeHeap() {}
         void heapify(int);
         void insert(T, int);
         T extract();
@@ -31,11 +32,6 @@ class MinNodeHeap {
         template <class U>
         friend std::ostream& operator<<(std::ostream&, MinNodeHeap<U>);
 };
-
-template <class T>
-MinNodeHeap<T>::MinNodeHeap(){
-    heap = std::vector<HeapNode<T>>();
-}
 
 template <class T>
 void MinNodeHeap<T>::heapify(int curr){

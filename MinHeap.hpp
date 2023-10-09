@@ -13,8 +13,9 @@ class MinHeap {
         int right(int i) { return (2*i + 2); }
 
     public:
-        MinHeap();
+        MinHeap() { heap = std::vector<int>(); }
         MinHeap(std::vector<int>);
+        ~MinHeap() {}
         void heapify(int);
         void insert(int);
         int extract();
@@ -26,10 +27,6 @@ class MinHeap {
         void show();
         friend std::ostream& operator<<(std::ostream&, MinHeap);
 };
-
-MinHeap::MinHeap(){
-    heap = std::vector<int>();
-}
 
 MinHeap::MinHeap(std::vector<int> v){
     heap = std::vector<int>();

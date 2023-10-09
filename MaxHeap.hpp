@@ -13,8 +13,9 @@ class MaxHeap {
         int right(int i) { return (2*i + 2); }
 
     public:
-        MaxHeap();
+        MaxHeap() { heap = std::vector<int>(); }
         MaxHeap(std::vector<int>);
+        ~MaxHeap() {}
         void heapify(int);
         void insert(int);
         int extract();
@@ -27,10 +28,6 @@ class MaxHeap {
         void show();
         friend std::ostream& operator<<(std::ostream&, MaxHeap);
 };
-
-MaxHeap::MaxHeap(){
-    heap = std::vector<int>();
-}
 
 MaxHeap::MaxHeap(std::vector<int> v){
     heap = std::vector<int>();
