@@ -6,6 +6,11 @@
 #include <vector>
 #include <algorithm>
 
+/**
+ * @brief MaxNodeHeap class
+ * 
+ * @author Jonathan Ung
+ */
 template <class T>
 class MaxNodeHeap {
     private:

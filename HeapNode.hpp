@@ -4,6 +4,11 @@
 #include <iostream>
 
 template <class T>
+/**
+ * @brief HeapNode class
+ * 
+ * @author Jonathan Ung
+ */
 class HeapNode{
     public:
         T data;

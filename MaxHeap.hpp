@@ -5,6 +5,11 @@
 #include <vector>
 #include <algorithm>
 
+/**
+ * @brief MaxHeap class
+ * 
+ * @author Jonathan Ung
+ */
 class MaxHeap {
     private:
         std::vector<int> heap;

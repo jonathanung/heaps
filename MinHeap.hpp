@@ -5,6 +5,11 @@
 #include <vector>
 #include <algorithm>
 
+/**
+ * @brief MinHeap class
+ * 
+ * @author Jonathan Ung
+ */
 class MinHeap {
     private:
         std::vector<int> heap;

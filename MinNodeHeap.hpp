@@ -6,6 +6,11 @@
 #include <vector>
 #include <algorithm>
 
+/**
+ * @brief MinNodeHeap class
+ * 
+ * @author Jonathan Ung
+ */
 template <class T>
 class MinNodeHeap {
     private:
