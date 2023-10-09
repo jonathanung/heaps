@@ -13,24 +13,24 @@
 class MinHeap {
     private:
         std::vector<int> heap;
-        int parent(int i) { return (i-1)/2; }
-        int left(int i) { return (2*i + 1); }
-        int right(int i) { return (2*i + 2); }
+        static const int parent(int i) { return (i-1)/2; }
+        static const int left(int i) { return (2*i + 1); }
+        static const int right(int i) { return (2*i + 2); }
 
     public:
         MinHeap() { heap = std::vector<int>(); }
         MinHeap(std::vector<int>);
         ~MinHeap() {}
         void heapify(int);
-        void insert(int);
+        void insert(const int);
         int extract();
-        int peek() { return heap[0]; }
-        void mergeWith(MinHeap);
-        friend MinHeap merge(MinHeap, MinHeap);
+        int peek() const { return heap[0]; }
+        void mergeWith(MinHeap &);
+        friend MinHeap merge(const MinHeap &, const MinHeap &);
         void clear();
 
-        void show();
-        friend std::ostream& operator<<(std::ostream&, MinHeap);
+        void show() const;
+        friend std::ostream& operator<<(std::ostream&, const MinHeap &);
 };
 
 MinHeap::MinHeap(std::vector<int> v){
@@ -53,7 +53,7 @@ void MinHeap::heapify(int curr){
     }
 }
 
-void MinHeap::insert(int val) { // O(1) to O(logb2(n))
+void MinHeap::insert(const int val) { // O(1) to O(logb2(n))
     heap.push_back(val);
     for (int i = heap.size()-1; i > 0; i = i/2) {
         if (heap[i] < heap[i/2]) {
@@ -75,7 +75,7 @@ int MinHeap::extract(){
     return temp;
 }
 
-void MinHeap::show() {
+void MinHeap::show() const {
     std::cout << "Heap: [";
     for (int i = 0; i < heap.size(); i++) {
         std::cout << heap[i];
@@ -86,7 +86,7 @@ void MinHeap::show() {
     std::cout << "]" << std::endl;
 }
 
-std::ostream& operator<<(std::ostream& o, MinHeap mH) {
+std::ostream& operator<<(std::ostream& o, const MinHeap &mH) {
     o << "Heap: [";
     for (int i = 0; i < mH.heap.size(); i++) {
         o << mH.heap[i];
@@ -98,14 +98,14 @@ std::ostream& operator<<(std::ostream& o, MinHeap mH) {
     return o;
 }
 
-void MinHeap::mergeWith(MinHeap other) {
+void MinHeap::mergeWith(MinHeap & other) {
     for (int i = 0; i < other.heap.size(); i++) {
         insert(other.heap[i]);
     }
     other.clear();
 }
 
-MinHeap merge(MinHeap mH1, MinHeap mH2) {
+MinHeap merge(const MinHeap & mH1, const MinHeap & mH2) {
     MinHeap mergedHeap = MinHeap();
     for (int i = 0; i < mH1.heap.size(); i++) {
         mergedHeap.insert(mH1.heap[i]);

@@ -15,27 +15,26 @@ template <class T>
 class MaxNodeHeap {
     private:
         std::vector<HeapNode<T>> heap;
-        int parent(int i) { return (i-1)/2; }
-        int left(int i) { return (2*i + 1); }
-        int right(int i) { return (2*i + 2); }
+        static const int parent(int i) { return (i-1)/2; }
+        static const int left(int i) { return (2*i + 1); }
+        static const int right(int i) { return (2*i + 2); }
 
     public:
         MaxNodeHeap() { heap = std::vector<HeapNode<T>>(); }
         ~MaxNodeHeap() {}
         void heapify(int);
-        void insert(T, int);
+        void insert(const T, const int);
         T extract();
         HeapNode<T> extractNode();
-        T peek() { return heap[0].data; }
-        void mergeWith(MaxNodeHeap<T>);
+        T peek() const { return heap[0].data; }
+        void mergeWith(MaxNodeHeap<T> &);
         template <class U>
-        friend MaxNodeHeap<U> merge(MaxNodeHeap<U>, MaxNodeHeap<U>);
+        friend MaxNodeHeap<U> merge(const MaxNodeHeap<U>&, const MaxNodeHeap<U>&);
         void clear();
 
-
-        void show();
+        void show() const;
         template <class U>
-        friend std::ostream& operator<<(std::ostream&, MaxNodeHeap<U>);
+        friend std::ostream& operator<<(std::ostream&, const MaxNodeHeap<U>&);
 };
 
 template <class T>
@@ -53,7 +52,7 @@ void MaxNodeHeap<T>::heapify(int curr){
 }
 
 template <class T>
-void MaxNodeHeap<T>::insert(T data, int weight) { // O(1) to O(logb2(n))
+void MaxNodeHeap<T>::insert(const T data, const int weight) { // O(1) to O(logb2(n))
     HeapNode<T> val = HeapNode<T>(data, weight);
     heap.push_back(val);
     for (int i = heap.size()-1; i > 0; i = i/2) {
@@ -90,7 +89,7 @@ HeapNode<T> MaxNodeHeap<T>::extractNode(){
 }
 
 template <class T>
-void MaxNodeHeap<T>::show() {
+void MaxNodeHeap<T>::show() const{
     std::cout << "Heap: [";
     for (int i = 0; i < heap.size(); i++) {
         std::cout << heap[i];
@@ -102,7 +101,7 @@ void MaxNodeHeap<T>::show() {
 }
 
 template <class T>
-std::ostream& operator<<(std::ostream& o, MaxNodeHeap<T> mH) {
+std::ostream& operator<<(std::ostream& o, const MaxNodeHeap<T> & mH) {
     o << "Heap: [";
     for (int i = 0; i < mH.heap.size(); i++) {
         o << mH.heap[i];
@@ -115,7 +114,7 @@ std::ostream& operator<<(std::ostream& o, MaxNodeHeap<T> mH) {
 }
 
 template <class T>
-void MaxNodeHeap<T>::mergeWith(MaxNodeHeap<T> other) {
+void MaxNodeHeap<T>::mergeWith(MaxNodeHeap<T> & other) {
     for (int i = 0; i < other.heap.size(); i++) {
         insert(other.heap[i]);
     }
@@ -123,7 +122,7 @@ void MaxNodeHeap<T>::mergeWith(MaxNodeHeap<T> other) {
 }
 
 template <class T>
-MaxNodeHeap<T> merge(MaxNodeHeap<T> mH1, MaxNodeHeap<T> mH2) {
+MaxNodeHeap<T> merge(const MaxNodeHeap<T> & mH1, const MaxNodeHeap<T> & mH2) {
     MaxNodeHeap<T> mergedHeap = MaxNodeHeap<T>();
     for (int i = 0; i < mH1.heap.size(); i++) {
         mergedHeap.insert(mH1.heap[i]);

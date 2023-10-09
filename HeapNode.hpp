@@ -14,7 +14,7 @@ class HeapNode{
         T data;
         int weight;
         HeapNode(T, int);
-        void show();
+        void show() const;
 
         template <class U>
         friend std::ostream& operator<<(std::ostream &, HeapNode<U>);
@@ -27,7 +27,7 @@ HeapNode<T>::HeapNode(T d, int w) {
 }
 
 template <class T>
-void HeapNode<T>::show() {
+void HeapNode<T>::show() const{
     std::cout << "{" << data << ", " << weight << "}";
 }
 

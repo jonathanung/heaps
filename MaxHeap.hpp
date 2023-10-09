@@ -13,25 +13,24 @@
 class MaxHeap {
     private:
         std::vector<int> heap;
-        int parent(int i) { return (i-1)/2; }
-        int left(int i) { return (2*i + 1); }
-        int right(int i) { return (2*i + 2); }
+        static const int parent(int i) { return (i-1)/2; }
+        static const int left(int i) { return (2*i + 1); }
+        static const int right(int i) { return (2*i + 2); }
 
     public:
         MaxHeap() { heap = std::vector<int>(); }
         MaxHeap(std::vector<int>);
         ~MaxHeap() {}
         void heapify(int);
-        void insert(int);
+        void insert(const int);
         int extract();
-        int peek() { return heap[0]; }
-        void mergeWith(MaxHeap);
-        friend MaxHeap merge(MaxHeap, MaxHeap);
+        int peek() const { return heap[0]; }
+        void mergeWith(MaxHeap &);
+        friend MaxHeap merge(const MaxHeap &, const MaxHeap& );
         void clear();
 
-
-        void show();
-        friend std::ostream& operator<<(std::ostream&, MaxHeap);
+        void show() const;
+        friend std::ostream& operator<<(std::ostream&, const MaxHeap&);
 };
 
 MaxHeap::MaxHeap(std::vector<int> v){
@@ -54,7 +53,7 @@ void MaxHeap::heapify(int curr){
     }
 }
 
-void MaxHeap::insert(int val) { // O(1) to O(logb2(n))
+void MaxHeap::insert(const int val) { // O(1) to O(logb2(n))
     heap.push_back(val);
     for (int i = heap.size()-1; i > 0; i = i/2) {
         if (heap[i] > heap[i/2]) {
@@ -76,7 +75,7 @@ int MaxHeap::extract(){
     return temp;
 }
 
-void MaxHeap::show() {
+void MaxHeap::show() const {
     std::cout << "Heap: [";
     for (int i = 0; i < heap.size(); i++) {
         std::cout << heap[i];
@@ -87,7 +86,7 @@ void MaxHeap::show() {
     std::cout << "]" << std::endl;
 }
 
-std::ostream& operator<<(std::ostream& o, MaxHeap mH) {
+std::ostream& operator<<(std::ostream& o, const MaxHeap& mH) {
     o << "Heap: [";
     for (int i = 0; i < mH.heap.size(); i++) {
         o << mH.heap[i];
@@ -99,14 +98,14 @@ std::ostream& operator<<(std::ostream& o, MaxHeap mH) {
     return o;
 }
 
-void MaxHeap::mergeWith(MaxHeap other) {
+void MaxHeap::mergeWith(MaxHeap & other) {
     for (int i = 0; i < other.heap.size(); i++) {
         insert(other.heap[i]);
     }
     other.clear();
 }
 
-MaxHeap merge(MaxHeap mH1, MaxHeap mH2) {
+MaxHeap merge(const MaxHeap & mH1, const MaxHeap & mH2) {
     MaxHeap mergedHeap = MaxHeap();
     for (int i = 0; i < mH1.heap.size(); i++) {
         mergedHeap.insert(mH1.heap[i]);

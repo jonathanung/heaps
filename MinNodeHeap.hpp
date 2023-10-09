@@ -15,27 +15,26 @@ template <class T>
 class MinNodeHeap {
     private:
         std::vector<HeapNode<T>> heap;
-        int parent(int i) { return (i-1)/2; }
-        int left(int i) { return (2*i + 1); }
-        int right(int i) { return (2*i + 2); }
+        static const int parent(int i) { return (i-1)/2; }
+        static const int left(int i) { return (2*i + 1); }
+        static const int right(int i) { return (2*i + 2); }
 
     public:
         MinNodeHeap() { heap = std::vector<HeapNode<T>>(); } 
         ~MinNodeHeap() {}
         void heapify(int);
-        void insert(T, int);
+        void insert(const T, const int);
         T extract();
         HeapNode<T> extractNode();
-        T peek() { return heap[0].data; }
-        void mergeWith(MinNodeHeap<T>);
+        T peek() const { return heap[0].data; }
+        void mergeWith(MinNodeHeap<T> &);
         template <class U>
-        friend MinNodeHeap<U> merge(MinNodeHeap<U>, MinNodeHeap<U>);
+        friend MinNodeHeap<U> merge(const MinNodeHeap<U> &, const MinNodeHeap<U> &);
         void clear();
 
-
-        void show();
+        void show() const;
         template <class U>
-        friend std::ostream& operator<<(std::ostream&, MinNodeHeap<U>);
+        friend std::ostream& operator<<(std::ostream&, const MinNodeHeap<U> &);
 };
 
 template <class T>
@@ -53,7 +52,7 @@ void MinNodeHeap<T>::heapify(int curr){
 }
 
 template <class T>
-void MinNodeHeap<T>::insert(T data, int weight) { // O(1) to O(logb2(n))
+void MinNodeHeap<T>::insert(const T data, const int weight) { // O(1) to O(logb2(n))
     HeapNode<T> val = HeapNode<T>(data, weight);
     heap.push_back(val);
     for (int i = heap.size()-1; i > 0; i = i/2) {
@@ -90,7 +89,7 @@ HeapNode<T> MinNodeHeap<T>::extractNode(){
 }
 
 template <class T>
-void MinNodeHeap<T>::show() {
+void MinNodeHeap<T>::show() const {
     std::cout << "Heap: [";
     for (int i = 0; i < heap.size(); i++) {
         std::cout << heap[i];
@@ -102,7 +101,7 @@ void MinNodeHeap<T>::show() {
 }
 
 template <class T>
-std::ostream& operator<<(std::ostream& o, MinNodeHeap<T> mH) {
+std::ostream& operator<<(std::ostream& o, const MinNodeHeap<T> & mH) {
     o << "Heap: [";
     for (int i = 0; i < mH.heap.size(); i++) {
         o << mH.heap[i];
@@ -115,7 +114,7 @@ std::ostream& operator<<(std::ostream& o, MinNodeHeap<T> mH) {
 }
 
 template <class T>
-void MinNodeHeap<T>::mergeWith(MinNodeHeap<T> other) {
+void MinNodeHeap<T>::mergeWith(MinNodeHeap<T> & other) {
     for (int i = 0; i < other.heap.size(); i++) {
         insert(other.heap[i]);
     }
@@ -123,7 +122,7 @@ void MinNodeHeap<T>::mergeWith(MinNodeHeap<T> other) {
 }
 
 template <class T>
-MinNodeHeap<T> merge(MinNodeHeap<T> mH1, MinNodeHeap<T> mH2) {
+MinNodeHeap<T> merge(const MinNodeHeap<T> & mH1, const MinNodeHeap<T> & mH2) {
     MinNodeHeap<T> mergedHeap = MinNodeHeap<T>();
     for (int i = 0; i < mH1.heap.size(); i++) {
         mergedHeap.insert(mH1.heap[i]);
