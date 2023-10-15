@@ -55,9 +55,9 @@ template <class T>
 void MaxNodeHeap<T>::insert(const T data, const int weight) { // O(1) to O(logb2(n))
     HeapNode<T> val = HeapNode<T>(data, weight);
     heap.push_back(val);
-    for (int i = heap.size()-1; i > 0; i = i/2) {
-        if (heap[i].weight > heap[i/2].weight) {
-            std::swap(heap[i], heap[i / 2]);
+    for (int i = heap.size()-1; i > 0; i = parent(i)) {
+        if (heap[i].weight > heap[parent(i)].weight) {
+            std::swap(heap[i], heap[parent(i)]);
         } else {
             break;
         }
